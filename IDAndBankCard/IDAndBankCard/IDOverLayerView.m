@@ -42,6 +42,7 @@
         float x = height * 22 / 54;
         x = x + (height - x) / 2;
         label.center = CGPointMake(x, width/2);
+        
     }
     return self;
 }
@@ -99,6 +100,12 @@
     CGContextMoveToPoint(context,p1.x, p1.y);
     CGContextAddLineToPoint(context, p2.x, p2.y);
     CGContextStrokePath(context);
+    
+    
+    CGRect viewFrame=[self OverlayFrame:[UIScreen mainScreen].bounds];
+    CGContextAddRect(context, CGRectMake(viewFrame.size.width*1/4,viewFrame.size.height*3/5+5, viewFrame.size.width*3/5+10, viewFrame.size.height*2/5-30));
+    CGContextStrokePath(context);
+    
 
 }
 
@@ -122,4 +129,24 @@
     return CGRectMake(left, top, cardw, cardh);
 }
 
+
+- (CGRect)OverlayFrame:(CGRect)rect {
+    float previewWidth = rect.size.width;
+    float previewHeight = rect.size.height;
+    
+    float cardh, cardw;
+    float left, top;
+    
+    cardw = previewWidth*70/100;
+    //if(cardw < 720) cardw = 720;
+    if(previewWidth < cardw)
+        cardw = previewWidth;
+    
+    cardh = (int)(cardw / 0.63084f);
+    
+    left = (previewWidth-cardw)/2;
+    top = (previewHeight-cardh)/2;
+    
+    return CGRectMake(left, top, cardw, cardh);
+}
 @end

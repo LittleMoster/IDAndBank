@@ -21,7 +21,7 @@
 @property (copy, nonatomic) NSString *valid; //有效期
 @property (nonatomic, strong) UIImage *idImage;
 
-
+//银行卡
 @property (nonatomic, copy) NSString *bankNumber;
 @property (nonatomic, copy) NSString *bankName;
 @property (nonatomic, strong) UIImage *bankImage;

@@ -59,14 +59,60 @@
 
 - (void)showResult:(id)result {
     XLScanResultModel *model = (XLScanResultModel *)result;
-//    UIImage *image=model.idImage;
-//    UIImageView *imageview=[[UIImageView alloc]initWithFrame:self.view.bounds];
-//    imageview.image=model.idImage;
-//    [self.view addSubview:imageview];
+    UIImage *image=model.idImage;
+   
+    UIImageView *imageview=[[UIImageView alloc]initWithFrame:CGRectMake(100, 100, 100, 100)];
     
-    NSString *message = [NSString stringWithFormat:@"%@", [model toString]];
-    UIAlertView *alertV = [[UIAlertView alloc] initWithTitle:@"扫描成功" message:message delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
-    [alertV show];
+    image=[self getHeaderImage:image];
+  
+    imageview.image=image;
+    [self.view addSubview:imageview];
+    
+//    NSString *message = [NSString stringWithFormat:@"%@", [model toString]];
+//    UIAlertView *alertV = [[UIAlertView alloc] initWithTitle:@"扫描成功" message:message delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
+//    [alertV show];
 }
+- (UIImage *)imageRotatedByRadians:(CGFloat)radians image:(UIImage*)image
+{
+    // 定义一个执行旋转的CGAffineTransform结构体
+    CGAffineTransform t = CGAffineTransformMakeRotation(radians);
+    // 对图片的原始区域执行旋转，获取旋转后的区域
+    CGRect rotatedRect = CGRectApplyAffineTransform(
+                                                    CGRectMake(0.0 , 0.0, image.size.width, image.size.height) , t);
+    // 获取图片旋转后的大小
+    CGSize rotatedSize = rotatedRect.size;
+    // 创建绘制位图的上下文
+    UIGraphicsBeginImageContext(rotatedSize);
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    // 指定坐标变换，将坐标中心平移到图片的中心
+    CGContextTranslateCTM(ctx, rotatedSize.width/2, rotatedSize.height/2);
+    // 执行坐标变换，旋转过radians弧度
+    CGContextRotateCTM(ctx , radians);
+    // 执行坐标变换，执行缩放
+    CGContextScaleCTM(ctx, 1.0, -1.0);
+    // 绘制图片
+    CGContextDrawImage(ctx, CGRectMake(-image.size.width / 2
+                                       , -image.size.height / 2,
+                                       image.size.width,
+                                       image.size.height), image.CGImage);
+    // 获取绘制后生成的新图片
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    // 返回新图片
+    
+    return newImage;
+}
+
+-(UIImage*)getHeaderImage:(UIImage*)image
+{
+ 
+    
+    image= [self imageRotatedByRadians:90.0* M_PI / 180 image:model.idImage];
+    CGRect rect= CGRectMake(image.size.width*1/4,image.size.height*3/5+5, image.size.width*3/5+15, image.size.height*2/5-30);//创建矩形框
+ image= [UIImage imageWithCGImage:CGImageCreateWithImageInRect([image CGImage], rect)];
+
+    return [self imageRotatedByRadians:-90.0* M_PI / 180 image:image];
+}
+
 
 @end
