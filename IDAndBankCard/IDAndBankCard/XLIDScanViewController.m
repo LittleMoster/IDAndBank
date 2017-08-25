@@ -107,7 +107,7 @@
 {
  
     
-    image= [self imageRotatedByRadians:90.0* M_PI / 180 image:model.idImage];
+    image= [self imageRotatedByRadians:90.0* M_PI / 180 image:image];
     CGRect rect= CGRectMake(image.size.width*1/4,image.size.height*3/5+5, image.size.width*3/5+15, image.size.height*2/5-30);//创建矩形框
  image= [UIImage imageWithCGImage:CGImageCreateWithImageInRect([image CGImage], rect)];
 
