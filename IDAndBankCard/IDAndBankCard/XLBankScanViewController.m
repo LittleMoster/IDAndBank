@@ -8,6 +8,7 @@
 
 #import "XLBankScanViewController.h"
 #import "OverlayView.h"
+#import "AFNetworking.h"
 
 @interface XLBankScanViewController ()
 
@@ -62,6 +63,19 @@
 
 - (void)showResult:(id)result {
     XLScanResultModel *model = (XLScanResultModel *)result;
+    //6221506020009066385
+    NSString *url=[NSString stringWithFormat:@"https://ccdcapi.alipay.com/validateAndCacheCardInfo.json?_input_charset=utf-8&cardNo=%@&cardBinCheck=true",model.bankNumber];
+    [[AFHTTPSessionManager manager]POST:url parameters:nil progress:^(NSProgress * _Nonnull uploadProgress) {
+        
+    } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
+        NSLog(@"%@",responseObject);
+        
+        
+    } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+        NSLog(@"%@",error);
+    }];
+    
+    
     NSString *message = [NSString stringWithFormat:@"%@\n%@", model.bankName, model.bankNumber];
     UIAlertView *alertV = [[UIAlertView alloc] initWithTitle:@"扫描成功" message:message delegate:self cancelButtonTitle:@"确定" otherButtonTitles: nil];
     [alertV show];

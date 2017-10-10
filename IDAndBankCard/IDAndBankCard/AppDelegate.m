@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "XLListViewController.h"
+#import "ViewController.h"
 
 @interface AppDelegate ()
 
@@ -27,7 +28,9 @@
 - (void)configRootController {
     XLListViewController *listVC = [XLListViewController new];
     
-    UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:listVC];
+    ViewController *vc=[[ViewController alloc]init];
+    
+    UINavigationController *navVC = [[UINavigationController alloc] initWithRootViewController:vc];
     self.window.rootViewController = navVC;
     
     [self.window makeKeyAndVisible];

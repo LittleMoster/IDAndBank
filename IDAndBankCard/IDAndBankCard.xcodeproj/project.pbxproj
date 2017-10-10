@@ -729,6 +729,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.yonxin.edu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Debug;
 		};
@@ -755,6 +756,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.yonxin.edu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				USER_HEADER_SEARCH_PATHS = "${SRCROOT}/**";
 			};
 			name = Release;
 		};
